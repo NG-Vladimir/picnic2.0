@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Молодёжный Пикник</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet"/>
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: 'Montserrat', sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: linear-gradient(to bottom right, #f0f9ff, #e0f2fe);
+      padding: 20px;
+      color: #333;
+      min-height: 100vh;
+      animation: fadeIn 1s ease-in;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .container {
+      max-width: 500px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 20px;
+      padding: 30px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      animation: slideIn 0.8s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    @keyframes slideIn {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    h1 {
+      font-size: 2.2em;
+      text-align: center;
+      color: #2563eb;
+      margin-bottom: 10px;
+      position: relative;
+    }
+
+    h1::after {
+      content: "";
+      display: block;
+      width: 60px;
+      height: 3px;
+      background: #2563eb;
+      margin: 10px auto;
+      border-radius: 3px;
+    }
+
+    .date {
+      text-align: center;
+      font-size: 1em;
+      color: #555;
+      margin-bottom: 20px;
+    }
+
+    .description {
+      text-align: center;
+      font-size: 1em;
+      margin-bottom: 20px;
+      color: #4b5563;
+    }
+
+    .program {
+      background: #f8fafc;
+      padding: 20px;
+      border-radius: 16px;
+      margin-bottom: 25px;
+      transition: all 0.3s;
+      border-left: 4px solid #2563eb;
+    }
+
+    .program:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    }
+
+    .program ul {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    .program li {
+      margin: 12px 0;
+      position: relative;
+      padding-left: 28px;
+      line-height: 1.5;
+    }
+
+    .program li::before {
+      content: "•";
+      position: absolute;
+      left: 10px;
+      color: #2563eb;
+      font-weight: bold;
+      font-size: 1.4em;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: #374151;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 12px 15px;
+      border-radius: 12px;
+      border: 2px solid #e5e7eb;
+      font-size: 1em;
+      transition: all 0.3s;
+      background: #f9fafb;
+    }
+
+    input[type="text"]:focus {
+      outline: none;
+      border-color: #2563eb;
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+      background: white;
+    }
+
+    .options {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .options button {
+      padding: 12px;
+      font-size: 1em;
+      border: 2px solid #e5e7eb;
+      border-radius: 12px;
+      background-color: white;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-weight: 500;
+    }
+
+    .options button:hover {
+      background-color: #f3f4f6;
+      border-color: #d1d5db;
+    }
+
+    .options button.active {
+      background-color: #2563eb;
+      color: white;
+      border-color: #2563eb;
+      transform: scale(0.98);
+    }
+
+    .submit-btn {
+      margin-top: 20px;
+      width: 100%;
+      padding: 14px;
+      font-size: 1.1em;
+      border: none;
+      border-radius: 12px;
+      background: linear-gradient(to right, #3b82f6, #2563eb);
+      color: white;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-weight: 600;
+      box-shadow: 0 4px 6px rgba(37, 99, 235, 0.1);
+    }
+
+    .submit-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 10px rgba(37, 99, 235, 0.15);
+    }
+
+    .guests {
+      margin-top: 30px;
+      text-align: center;
+      padding: 20px;
+      background: #f8fafc;
+      border-radius: 16px;
+    }
+
+    .guests h2 {
+      font-size: 1.3em;
+      color: #1e40af;
+      margin-bottom: 8px;
+      position: relative;
+      display: inline-block;
+    }
+
+    .guests h2::after {
+      content: "";
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(to right, #3b82f6, transparent);
+    }
+
+    .guest-photos {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 15px;
+      margin: 20px 0;
+    }
+
+    .guest-photos img {
+      width: 90px;
+      height: 90px;
+      border-radius: 16px;
+      object-fit: cover;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s;
+      border: 3px solid white;
+    }
+
+    .guest-photos img:hover {
+      transform: scale(1.1);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .guest-note {
+      font-style: italic;
+      font-size: 0.9em;
+      color: #4b5563;
+      margin-bottom: 10px;
+    }
+
+    .final-note {
+      margin-top: 15px;
+      font-weight: bold;
+      color: #1e40af;
+      font-size: 1em;
+      background: #eff6ff;
+      padding: 10px;
+      border-radius: 10px;
+      display: inline-block;
+    }
+
+    .telegram-block, .map-block {
+      margin-top: 30px;
+      text-align: center;
+      padding: 20px;
+      background: #f8fafc;
+      border-radius: 16px;
+    }
+
+    .telegram-block h2, .map-block h2 {
+      font-size: 1.3em;
+      color: #1e40af;
+      margin-bottom: 15px;
+    }
+
+    .telegram-block p, .map-block p {
+      margin-bottom: 20px;
+      font-size: 0.95em;
+      color: #4b5563;
+      line-height: 1.5;
+    }
+
+    .telegram-block a, .map-block a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px 24px;
+      border-radius: 12px;
+      text-decoration: none;
+      font-weight: 600;
+      background: linear-gradient(to right, #3b82f6, #2563eb);
+      color: white;
+      transition: all 0.3s;
+      gap: 10px;
+      font-size: 1em;
+      box-shadow: 0 4px 6px rgba(37, 99, 235, 0.1);
+    }
+
+    .telegram-block a:hover, .map-block a:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 10px rgba(37, 99, 235, 0.15);
+    }
+
+    .telegram-icon {
+      width: 20px;
+      height: 20px;
+      fill: white;
+    }
+
+    .countdown-container {
+      margin: 40px 0 20px;
+      text-align: center;
+      padding: 25px;
+      background: linear-gradient(135deg, #2563eb, #1e40af);
+      border-radius: 16px;
+      color: white;
+      box-shadow: 0 10px 20px rgba(37, 99, 235, 0.2);
+    }
+
+    .countdown-title {
+      font-size: 1.2em;
+      margin-bottom: 15px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .countdown-timer {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+    }
+
+    .countdown-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .countdown-value {
+      font-size: 2.5em;
+      font-weight: 700;
+      background: rgba(255, 255, 255, 0.1);
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 5px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .countdown-label {
+      font-size: 0.8em;
+      opacity: 0.8;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .goodbye {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 1.2em;
+      color: #1e40af;
+      font-weight: 600;
+      padding: 10px;
+    }
+
+    .success-message {
+      display: none;
+      text-align: center;
+      padding: 20px;
+      background-color: #d4edda;
+      color: #155724;
+      border-radius: 10px;
+      margin-top: 20px;
+      animation: fadeIn 0.5s ease-in;
+    }
+
+    @media (max-width: 600px) {
+      .container {
+        padding: 20px;
+      }
+
+      h1 {
+        font-size: 1.8em;
+      }
+
+      .options {
+        grid-template-columns: 1fr;
+      }
+
+      .guest-photos img {
+        width: 70px;
+        height: 70px;
+      }
+
+      .countdown-timer {
+        gap: 8px;
+      }
+
+      .countdown-value {
+        width: 60px;
+        height: 60px;
+        font-size: 1.8em;
+      }
+
+      .countdown-label {
+        font-size: 0.7em;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Молодёжный Пикник</h1>
+    <p class="date">Пятница, 26 июля 2025 • 14:00</p>
+    <p class="description">
+      Приглашаем на атмосферный христианский пикник: вкусная еда, общение, молитва и радость вместе
+    </p>
+
+    <div class="program">
+      <strong>Программа:</strong>
+      <ul>
+        <li>Шашлыки и напитки</li>
+        <li>Настольные игры и волейбол</li>
+        <li>Гитара, молитва, душевные беседы</li>
+      </ul>
+    </div>
+
+    <!-- ОБНОВЛЕННАЯ ФОРМА С AJAX ОТПРАВКОЙ -->
+    <form id="picnicForm">
+      <div class="form-group">
+        <label for="name">Твоё имя:</label>
+        <input 
+          type="text" 
+          id="name" 
+          name="entry.2022524734" 
+          required 
+          placeholder="Напиши, как тебя зовут"
+        />
+      </div>
+
+      <div class="form-group">
+        <label>Ты придёшь?</label>
+        <div class="options">
+          <button type="button" onclick="selectOption(this, 'Буду')">Буду</button>
+          <button type="button" onclick="selectOption(this, 'Буду с другом')">Буду с другом</button>
+          <button type="button" onclick="selectOption(this, 'Не смогу')">Не смогу</button>
+          <input type="hidden" id="attendance" name="entry.1303459650">
+        </div>
+      </div>
+
+      <button type="submit" class="submit-btn">Отправить</button>
+    </form>
+
+    <div id="successMessage" class="success-message">
+      Спасибо за ваш ответ! Мы будем ждать вас на пикнике!
+    </div>
+
+    <div class="guests">
+      <h2>Особенные гости</h2>
+      <p class="guest-note">Левиты церкви "Жизнь"</p>
+      <div class="guest-photos">
+        <img src="1.png" alt="Гость 1" />
+        <img src="2.png" alt="Гость 2" />
+        <img src="3.png" alt="Гость 3" />
+      </div>
+      <p class="final-note">Возьми с собой хорошее настроение и 10 рублей</p>
+    </div>
+
+    <div class="telegram-block">
+      <h2>Фото и видео с пикника</h2>
+      <p>Мы создали Telegram-группу, куда будем скидывать все фото и видео.<br>Хочешь быть в курсе — присоединяйся:</p>
+      <a href="https://t.me/+3mUax9PYe44wZGEy" target="_blank" aria-label="Перейти в Telegram группу">
+        <svg class="telegram-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" role="img" aria-hidden="true">
+          <path d="M120 0C53.7 0 0 53.7 0 120c0 66.3 53.7 120 120 120s120-53.7 120-120C240 53.7 186.3 0 120 0zm57.7 81.1l-18.7 87.8c-1.4 6.4-5.1 8-10.3 5l-28.5-21.1-13.7 13.2c-1.5 1.5-2.8 2.8-5.8 2.8l2.1-29.7 54-48.7c2.4-2.1-.5-3.3-3.7-1.2l-66.8 41.9-28.7-8.9c-6.2-1.9-6.3-6.2 1.3-9.1l112-43c5.2-2 9.8 1.3 8 9.3z"/>
+        </svg>
+        В группу
+      </a>
+    </div>
+
+    <div class="map-block">
+      <h2>Как добраться?</h2>
+      <p>Адрес: ул. Огородницкая 15, ТИАО (Минск)<br>Жми на кнопку — маршрут откроется в Яндекс.Картах:</p>
+      <a href="https://yandex.by/maps/157/minsk/?ll=27.555691%2C53.902735&mode=routes&rtext=~53.950335%2C27.514220&rtt=auto&ruri=~ymapsbm1%3A%2F%2Fgeo%3Fdata%3DCgoxNjQ4NjkxMzgxEkfQkdC10LvQsNGA0YPRgdGMLCDQnNGW0L3RgdC6LCDQkNCz0LDRgNC-0LTQvdGW0YbQutCw0Y8g0LLRg9C70ZbRhtCwLCAxNSIKDSId3EEVJM1XQg%2C%2C&z=12" target="_blank">
+        Построить маршрут
+      </a>
+    </div>
+
+    <div class="countdown-container">
+      <div class="countdown-title">До пикника осталось:</div>
+      <div class="countdown-timer">
+        <div class="countdown-item">
+          <div class="countdown-value" id="days">00</div>
+          <div class="countdown-label">дней</div>
+        </div>
+        <div class="countdown-item">
+          <div class="countdown-value" id="hours">00</div>
+          <div class="countdown-label">часов</div>
+        </div>
+        <div class="countdown-item">
+          <div class="countdown-value" id="minutes">00</div>
+          <div class="countdown-label">минут</div>
+        </div>
+        <div class="countdown-item">
+          <div class="countdown-value" id="seconds">00</div>
+          <div class="countdown-label">секунд</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="goodbye">До скорой встречи!</div>
+  </div>
+
+  <script>
+    // Обработка формы
+    let selectedOption = null;
+    
+    function selectOption(button, value) {
+      document.querySelectorAll('.options button').forEach(btn => {
+        btn.classList.remove('active');
+      });
+      button.classList.add('active');
+      selectedOption = value;
+      document.getElementById('attendance').value = value;
+    }
+
+    // AJAX отправка формы
+    document.getElementById('picnicForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const name = document.getElementById('name').value.trim();
+      const attendance = document.getElementById('attendance').value;
+      
+      if (!selectedOption) {
+        alert('Пожалуйста, выбери, придёшь ли ты.');
+        return;
+      }
+      
+      // Собираем данные формы
+      const formData = new FormData();
+      formData.append('entry.2022524734', name);
+      formData.append('entry.1303459650', attendance);
+      
+      // URL вашей Google Forms
+      const formURL = 'https://docs.google.com/forms/d/e/1FAIpQLSc3LO01kbZz1Itgq7O4wmU_gUzYDBkbIJlAkcTKfMJxVkOn7A/formResponse';
+      
+      // Отправляем данные через fetch
+      fetch(formURL, {
+        method: 'POST',
+        mode: 'no-cors',
+        body: formData
+      })
+      .then(() => {
+        // Показываем сообщение об успехе
+        document.getElementById('successMessage').style.display = 'block';
+        document.getElementById('picnicForm').reset();
+        document.querySelectorAll('.options button').forEach(btn => {
+          btn.classList.remove('active');
+        });
+        selectedOption = null;
+        
+        // Прячем сообщение через 5 секунд
+        setTimeout(() => {
+          document.getElementById('successMessage').style.display = 'none';
+        }, 5000);
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        alert('Произошла ошибка при отправке формы. Пожалуйста, попробуйте ещё раз.');
+      });
+    });
+
+    // Таймер до 26 июля 2025, 14:00
+    function updateCountdown() {
+      const eventDate = new Date(2025, 6, 26, 14, 0, 0);
+      const now = new Date();
+      const diff = eventDate - now;
+
+      if (diff <= 0) {
+        document.querySelector('.countdown-container').innerHTML = 
+          '<div style="font-size:1.3em; font-weight:600;">Пикник начался! Ждём вас!</div>';
+        return;
+      }
+
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24)).toString().padStart(2, '0');
+      const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toString().padStart(2, '0');
+      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0');
+      const seconds = Math.floor((diff % (1000 * 60)) / 1000).toString().padStart(2, '0');
+
+      document.getElementById('days').textContent = days;
+      document.getElementById('hours').textContent = hours;
+      document.getElementById('minutes').textContent = minutes;
+      document.getElementById('seconds').textContent = seconds;
+    }
+
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+  </script>
+</body>
+</html>
